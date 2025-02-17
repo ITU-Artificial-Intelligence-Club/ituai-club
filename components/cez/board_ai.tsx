@@ -23,7 +23,15 @@ interface GameStats {
 const moveToNotation = (move: Move): string => {
   const from = String.fromCharCode(97 + move.from.x) + (8 - move.from.y);
   const to = String.fromCharCode(97 + move.to.x) + (8 - move.to.y);
-  return `${from}-${to}`;
+  const move_type = (move.capture == null) ? '>' : 'x';
+  if (move.to.x == move.from.x) {
+    return `${from}${move_type}${8 - move.to.y}`
+  }
+  else if (move.to.y == move.from.y) {
+    return `${from}${move_type}${String.fromCharCode(97 + move.to.x)}`
+  } else {
+    return '<invalid>'
+  }
 }
 
 export const CezBoardAI: React.FC<Props> = ({ is_player_white, board_size = 720 }) => {
